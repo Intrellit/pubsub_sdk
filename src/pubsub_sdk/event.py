@@ -8,9 +8,9 @@ def read_event(envelope):
         return envelope.get("type"), envelope.get("body")
 
 
-def send_event(type, body):
+def send_event(type, body, url="https://pubsub.jpnt.tech/ingress"):
     requests.post(
-        "https://pubsub.jpnt.tech/ingress",
+        url,
         json={
             "secret": os.getenv("PUBSUB_SECRET"),
             "type": type,

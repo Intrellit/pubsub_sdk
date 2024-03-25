@@ -1,4 +1,5 @@
 import os
+import time
 
 import requests
 
@@ -9,12 +10,16 @@ def read_event(envelope):
     return None, None
 
 
-def send_event(type, body, url="https://pubsub.jpnt.tech/ingress"):
+def send_event(type, body, id=None):
+    if not id:
+        id = round(time.time() * 1000)
     requests.post(
-        url,
+        "https://pubsub.jpnt.tech/ingress",
         json={
             "secret": os.getenv("PUBSUB_SECRET"),
             "type": type,
             "body": body,
+            "id": id,
         },
     )
+    return id

@@ -10,11 +10,11 @@ def read_event(envelope):
     return None, None
 
 
-def send_event(type, body, id=None, url="https://pubsub.jpnt.tech/ingress"):
+def send_event(type, body, id=None):
     if not id:
         id = round(time.time() * 1000)
     requests.post(
-        url,
+        os.getenv("PUBSUB_INGRESS_URL", "https://pubsub.jpnt.tech/ingress"),
         json={
             "secret": os.getenv("PUBSUB_SECRET"),
             "type": type,
